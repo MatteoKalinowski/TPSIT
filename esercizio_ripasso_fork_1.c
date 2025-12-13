@@ -27,7 +27,7 @@ int main() {
         printf("[FIGLIO] Calcolo: 10 * 5 = %d\n", risultato);
 
         printf("[FIGLIO] Terminazione con codice 42.\n");
-        exit(42);  
+        exit(0);  
     }
     else {
        
@@ -48,10 +48,9 @@ int main() {
             printf("[PADRE] Il figlio è terminato normalmente.\n");
             printf("[PADRE] Codice di uscita = %d\n", codice);
         }
-        else if (WIFSIGNALED(status)) {
-            int segnale = WTERMSIG(status);
-            printf("[PADRE] Il figlio è stato terminato da un segnale.\n");
-            printf("[PADRE] Segnale = %d\n", segnale);
+        else if(!WIFEXITED(status)) {
+            int erorre = !WEXITSTATUS(status);
+            printf("[PADRE] Il figlio non è terminato normalmente con codice = %d\n", erorre);
         }
 
         printf("[PADRE] Fine esecuzione.\n");
