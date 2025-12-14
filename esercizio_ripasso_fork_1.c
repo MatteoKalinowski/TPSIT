@@ -4,8 +4,9 @@
 #include <sys/wait.h>
 
 int main() {
-    printf("Processo principale avviato. PID = %d\n", getpid());
-
+    printf("Processo principale(principale) avviato. PID = %d\n", getppid());
+    printf("processo principale(main) ha PID: %d\n", getpid());
+    
     int pid = fork();
 
     if (pid < 0) {
@@ -48,9 +49,11 @@ int main() {
             printf("[PADRE] Il figlio è terminato normalmente.\n");
             printf("[PADRE] Codice di uscita = %d\n", codice);
         }
-        else if(!WIFEXITED(status)) {
-            int erorre = !WEXITSTATUS(status);
-            printf("[PADRE] Il figlio non è terminato normalmente con codice = %d\n", erorre);
+        else if(WIFSIGNALED(status)){
+            int segnale = WTERMSIG(status);
+            printf("[PADRE] Il figlio è stato terminato da un segnale.\n");
+            printf("[PADRE] Segnale = %d\n", segnale);
+        }
         }
 
         printf("[PADRE] Fine esecuzione.\n");
