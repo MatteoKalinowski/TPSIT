@@ -4,7 +4,7 @@
 #include <unistd.h> 
 
 void *codice_thread(void * arg){
-    while(-1){
+    while(1){
         printf("thread in esecuzione...\n");
         sleep(1);
     }
@@ -19,6 +19,6 @@ int main(){
     pthread_create(&ptid, NULL, codice_thread, NULL);
     scanf("%d", &n);
     pthread_cancel(ptid);
-    sleep(5);
+    pthread_join(ptid, NULL);
 }
     
